@@ -1,0 +1,759 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الدرس الثاني: الفعل الصحيح | بيئة التعلم المدمج</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Almarai:wght@700;800&family=Cairo:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            navy: '#0b192c',
+                            royal: '#1e3e62',
+                            teal: '#0f766e',
+                            gold: '#d4af37',
+                            goldLight: '#fef3c7'
+                        }
+                    },
+                    fontFamily: {
+                        cairo: ['Cairo', 'sans-serif'],
+                        almarai: ['Almarai', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body { font-family: 'Cairo', sans-serif; background-color: #f8fafc; color: #1e293b; }
+        .academic-logo { width: 55px; height: 55px; object-fit: contain; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.06)); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col antialiased">
+
+    <!-- HEADER -->
+    <header class="bg-white/95 backdrop-blur-md border-b border-slate-200 sticky top-0 z-50 shadow-xs">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2.5">
+            <div class="flex items-center justify-between gap-4">
+                
+                <div class="flex items-center gap-3 w-1/4 justify-start">
+                    <a href="index.html" class="p-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-brand-royal transition-all flex items-center gap-1.5 text-xs font-bold shadow-xs">
+                        <i class="fa-solid fa-arrow-right"></i>
+                        <span class="hidden sm:inline">الرئيسية</span>
+                    </a>
+                    <div class="hidden md:flex items-center justify-center">
+                        <img src="images/university-logo.png" alt="جامعة الوادي الجديد" class="academic-logo" onerror="this.style.display='none'; document.getElementById('uni-fallback-l2').classList.remove('hidden');">
+                        <div id="uni-fallback-l2" class="hidden w-11 h-11 rounded-xl bg-brand-navy text-amber-400 flex items-center justify-center text-lg border border-amber-400/30">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center flex-1 max-w-xl">
+                    <span class="text-[10px] font-extrabold uppercase tracking-widest px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">
+                        الوحدة الثانية • الصف الأول الإعدادي
+                    </span>
+                    <h1 class="text-sm sm:text-base font-black text-brand-navy truncate mt-0.5 font-almarai">
+                        الدرس الثاني: الفعل الصحيح (السالم - المهموز - المضعف)
+                    </h1>
+                </div>
+
+                <div class="flex items-center gap-3 w-1/4 justify-end">
+                    <div class="hidden lg:flex items-center gap-2 bg-slate-50 border border-slate-200 px-3 py-1.5 rounded-xl text-xs font-bold text-slate-700">
+                        <i class="fa-solid fa-user-graduate text-teal-600"></i>
+                        <span>بيئة التعلم المدمج</span>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <img src="images/faculty-logo.png" alt="كلية التربية" class="academic-logo" onerror="this.style.display='none'; document.getElementById('faculty-fallback-l2').classList.remove('hidden');">
+                        <div id="faculty-fallback-l2" class="hidden w-11 h-11 rounded-xl bg-teal-700 text-amber-400 flex items-center justify-center text-lg border border-amber-400/30">
+                            <i class="fa-solid fa-award"></i>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </header>
+
+    <!-- محتوى الدرس -->
+    <div class="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8 py-6 flex-1 flex flex-col lg:flex-row gap-6">
+
+        <!-- القائمة الجانبية: مسار التعلم -->
+        <aside class="w-full lg:w-80 flex-shrink-0 space-y-4">
+            
+            <div class="bg-white rounded-2xl p-4 border border-slate-200 shadow-xs">
+                <div class="flex items-center justify-between text-xs font-bold text-slate-700 mb-2">
+                    <span class="flex items-center gap-1.5"><i class="fa-solid fa-chart-line text-teal-600"></i> مسار إنجاز الدرس</span>
+                    <span id="progressText" class="text-teal-700 font-extrabold">20%</span>
+                </div>
+                <div class="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
+                    <div id="progressBar" class="bg-gradient-to-r from-teal-500 to-emerald-500 h-2.5 rounded-full transition-all duration-500" style="width: 20%;"></div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl p-3 border border-slate-200 shadow-xs space-y-1.5">
+                <p class="text-[11px] font-bold text-slate-400 px-3 py-1">محطات الأنشطة اللغوية:</p>
+
+                <button onclick="switchStation('story')" id="btn-story" class="station-btn w-full flex items-center justify-between p-3 rounded-xl bg-teal-50/80 border border-teal-200 text-teal-950 font-bold text-xs transition-all">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-teal-600 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-shield-heart"></i></span>
+                        <div class="text-right">
+                            <span class="block">1. القصة النحوية المشوقة</span>
+                            <span class="text-[10px] text-slate-400 font-normal">حصن الأفعال القوية المعافاة</span>
+                        </div>
+                    </div>
+                    <i class="fa-solid fa-circle-check text-emerald-600 text-sm"></i>
+                </button>
+
+                <button onclick="switchStation('learn')" id="btn-learn" class="station-btn w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent text-slate-700 font-bold text-xs transition-all">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-indigo-600 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-video"></i></span>
+                        <div class="text-right">
+                            <span class="block">2. الفيديو والشرح المبسط</span>
+                            <span class="text-[10px] text-slate-400 font-normal">أقسام الفعل الصحيح الثلاثة</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-slate-100 text-slate-600">شرح</span>
+                </button>
+
+                <button onclick="switchStation('games')" id="btn-games" class="station-btn w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent text-slate-700 font-bold text-xs transition-all">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-amber-500 text-slate-900 flex items-center justify-center text-xs"><i class="fa-solid fa-gamepad"></i></span>
+                        <div class="text-right">
+                            <span class="block">3. الألعاب اللغوية التفاعلية</span>
+                            <span class="text-[10px] text-slate-400 font-normal">فرز الصناديق + صائد الصحيح</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-amber-100 text-amber-800">لعبتان</span>
+                </button>
+
+                <button onclick="switchStation('compete')" id="btn-compete" class="station-btn w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent text-slate-700 font-bold text-xs transition-all">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-blue-600 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-microscope"></i></span>
+                        <div class="text-right">
+                            <span class="block">4. المسابقات والتحديات</span>
+                            <span class="text-[10px] text-slate-400 font-normal">مختبر تشخيص الأفعال الصحيحة</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-blue-100 text-blue-800">تحدي</span>
+                </button>
+
+                <button onclick="switchStation('exam')" id="btn-exam" class="station-btn w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent text-slate-700 font-bold text-xs transition-all">
+                    <div class="flex items-center gap-3">
+                        <span class="w-8 h-8 rounded-lg bg-rose-600 text-white flex items-center justify-center text-xs"><i class="fa-solid fa-file-circle-check"></i></span>
+                        <div class="text-right">
+                            <span class="block">5. الاختبار المقنن والشهادة</span>
+                            <span class="text-[10px] text-slate-400 font-normal">تقييم الكفاءة والشهادة</span>
+                        </div>
+                    </div>
+                    <span class="text-[10px] px-2 py-0.5 rounded-full bg-rose-100 text-rose-800">تقييم</span>
+                </button>
+            </div>
+
+            <div class="bg-teal-50/80 border border-teal-200/90 rounded-2xl p-4 text-xs space-y-2">
+                <div class="flex items-center gap-2 font-black text-teal-900">
+                    <i class="fa-solid fa-lightbulb text-teal-600"></i> القاعدة الذهبية للدرس:
+                </div>
+                <p class="text-teal-950 leading-relaxed text-[11px]">
+                    <strong>الفعل الصحيح:</strong> ما خلت حروفه الأصلية من أحرف العلة (الألف، الواو، الياء).<br>
+                    • <strong>مهموز:</strong> أحد أصوله همزة.<br>
+                    • <strong>مضعف:</strong> فيه تضعيف أصلي (ثلاثي مثل مَدَّ، أو رباعي مثل زَلْزَلَ).<br>
+                    • <strong>سالم:</strong> سَلِمَ من الهمز والتضعيف.
+                </p>
+            </div>
+
+        </aside>
+
+        <!-- الشاشة التفاعلية الكبرى -->
+        <main class="flex-1 min-w-0">
+
+            <!-- 1. المحطة الأولى: القصة النحوية المشوقة -->
+            <section id="station-story" class="station-view space-y-6">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs space-y-6">
+                    <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+                        <div>
+                            <span class="px-3 py-1 bg-teal-100 text-teal-900 rounded-full text-xs font-bold inline-block mb-1">المدخل القصصي</span>
+                            <h2 class="text-xl sm:text-2xl font-black text-brand-navy font-almarai">قصة حصن الأفعال القوية السليمة</h2>
+                        </div>
+                        <div class="w-12 h-12 rounded-2xl bg-teal-50 text-teal-600 flex items-center justify-center text-2xl">
+                            <i class="fa-solid fa-shield-halved"></i>
+                        </div>
+                    </div>
+
+                    <div class="bg-gradient-to-br from-teal-50/40 via-blue-50/30 to-slate-50 p-6 rounded-2xl border border-teal-200/70 text-slate-700 leading-relaxed space-y-4 text-sm sm:text-base">
+                        <p>
+                            في مدينة الصرف العريقة، أُقيم حصن منيع لا تدخله إلا الأفعال المعافاة القوية، ووضعت لافتة على بوابته: <strong>«ممنوع دخول أحرف العلة المريضة (الواو، الألف، الياء)!»</strong>.
+                        </p>
+                        <p>
+                            داخل الحصن استقر ثلاثة إخوة شجعان:
+                            <br>• الأخ الأول هو <strong>(السالم)</strong> مثل الفعل (كَتَبَ، جَلَسَ)، وكان هادئاً سَلِمَت حروفه من الهمزة ومن الشدة.
+                            <br>• والأخ الثاني هو <strong>(المهموز)</strong> مثل (أَكَلَ، سَأَلَ، قَرَأَ)، وكان يعتز بتاج الهمزة الذي يرتديه في أوله أو وسطه أو آخره.
+                            <br>• أما الأخ الثالث فكان <strong>(المضعف)</strong> صاحب القوة المضاعفة، تارة ثلاثي يتكرر حرفه مع الشدة مثل (شَدَّ، عَدَّ)، وتارة رباعي تتشابه حروفه المتقابلة كالجرس الموسيقي مثل (عَسْعَسَ، زَلْزَلَ).
+                        </p>
+                        <p>
+                            وقف الأشقاء الثلاثة وقالوا بصوت واحد: «نحن الأفعال الصحيحة، ركائز اللغة المتينة وأصولها الراسخة!».
+                        </p>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button onclick="switchStation('learn')" class="px-6 py-3 bg-teal-700 hover:bg-teal-800 text-white text-xs font-black rounded-xl shadow-xs flex items-center gap-2 transition-all">
+                            <span>الانتقال إلى الفيديو والشرح المبسط</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. المحطة الثانية: الفيديو والشرح المبسط -->
+            <section id="station-learn" class="station-view hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs">
+                    <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+                        <h2 class="text-base sm:text-lg font-black text-brand-navy flex items-center gap-2 font-almarai">
+                            <i class="fa-solid fa-circle-play text-rose-600"></i> المحاضرة المرئية: أقسام الفعل الصحيح
+                        </h2>
+                        <span class="text-xs bg-slate-100 px-3 py-1 rounded-full text-slate-600 font-semibold">فيديو مخصص</span>
+                    </div>
+
+                    <div class="w-full aspect-video bg-slate-950 rounded-2xl overflow-hidden shadow-inner flex items-center justify-center relative">
+                        <video class="w-full h-full object-contain" controls poster="images/video-cover.png">
+                            <source src="videos/lesson2.mp4" type="video/mp4">
+                            <p class="text-white text-xs p-4 text-center">ضع فيديو الشرح في المجلد: <code>videos/lesson2.mp4</code></p>
+                        </video>
+                    </div>
+                </div>
+
+                <!-- بطاقات أقسام الفعل الصحيح الثلاثة -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                    <!-- المهموز -->
+                    <div class="bg-white border-2 border-amber-500/20 rounded-3xl p-5 shadow-xs relative overflow-hidden">
+                        <div class="w-1.5 h-full bg-amber-500 absolute top-0 right-0"></div>
+                        <span class="px-2.5 py-0.5 bg-amber-50 text-amber-800 rounded-full text-[11px] font-black inline-block mb-2">1. المهموز</span>
+                        <h3 class="text-base font-black text-slate-900 mb-1">أحد أصوله همزة</h3>
+                        <p class="text-xs text-slate-600 mb-3">تكون الهمزة في أوله أو وسطه أو آخره:</p>
+                        <div class="space-y-1.5 text-xs bg-slate-50 p-3 rounded-xl border border-slate-100 font-bold text-slate-700">
+                            <div>• أوله: <strong>أَخَذَ، أَكَلَ، أَمَرَ</strong>.</div>
+                            <div>• وسطه: <strong>سَأَلَ، دَأَبَ، رَأَسَ</strong>.</div>
+                            <div>• آخره: <strong>قَرَأَ، بَدَأَ، نَشَأَ</strong>.</div>
+                        </div>
+                    </div>
+
+                    <!-- المضعف -->
+                    <div class="bg-white border-2 border-indigo-500/20 rounded-3xl p-5 shadow-xs relative overflow-hidden">
+                        <div class="w-1.5 h-full bg-indigo-500 absolute top-0 right-0"></div>
+                        <span class="px-2.5 py-0.5 bg-indigo-50 text-indigo-800 rounded-full text-[11px] font-black inline-block mb-2">2. المضعف</span>
+                        <h3 class="text-base font-black text-slate-900 mb-1">ما كان به تضعيف أصلي</h3>
+                        <p class="text-xs text-slate-600 mb-3">وينقسم إلى نوعين:</p>
+                        <div class="space-y-1.5 text-xs bg-slate-50 p-3 rounded-xl border border-slate-100 font-bold text-slate-700">
+                            <div>• ثلاثي (عينه ولامه من جنس): <strong>شَدَّ، مَدَّ، عَدَّ</strong>.</div>
+                            <div>• رباعي (الأول كالثالث، والثاني كالرابع): <strong>زَلْزَلَ، وَسْوَسَ، شَقْشَقَ</strong>.</div>
+                        </div>
+                    </div>
+
+                    <!-- السالم -->
+                    <div class="bg-white border-2 border-emerald-500/20 rounded-3xl p-5 shadow-xs relative overflow-hidden">
+                        <div class="w-1.5 h-full bg-emerald-500 absolute top-0 right-0"></div>
+                        <span class="px-2.5 py-0.5 bg-emerald-50 text-emerald-800 rounded-full text-[11px] font-black inline-block mb-2">3. السالم</span>
+                        <h3 class="text-base font-black text-slate-900 mb-1">سَلِمَ من الهمز والتضعيف</h3>
+                        <p class="text-xs text-slate-600 mb-3">لا يحتوي على همزة ولا تكرار مضعف:</p>
+                        <div class="space-y-1.5 text-xs bg-slate-50 p-3 rounded-xl border border-slate-100 font-bold text-slate-700">
+                            <div>• <strong>كَتَبَ، جَلَسَ، فَهِمَ</strong>.</div>
+                            <div>• <strong>حَفِظَ، رَسَمَ، صَنَعَ</strong>.</div>
+                            <div>• <strong>دَحْرَجَ، بَعْثَرَ</strong> (رباعي سالم).</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button onclick="switchStation('games')" class="px-6 py-3 bg-teal-700 hover:bg-teal-800 text-white text-xs font-black rounded-xl shadow-xs flex items-center gap-2 transition-all">
+                        <span>الانتقال إلى الألعاب اللغوية التفاعلية</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 3. المحطة الثالثة: الألعاب اللغوية التفاعلية (لعبتان) -->
+            <section id="station-games" class="station-view hidden space-y-6">
+                
+                <!-- اللعبة الأولى: فرز الأفعال في صناديق الصحيح -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs max-w-2xl mx-auto text-center space-y-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <div class="text-right">
+                            <span class="px-3 py-1 bg-amber-100 text-amber-900 rounded-full text-[10px] font-bold">اللعبة الأولى</span>
+                            <h3 class="text-base sm:text-lg font-black text-brand-navy mt-1 font-almarai">صناديق التصنيف السريع</h3>
+                            <p class="text-xs text-slate-500">صنّف الفعل الصحيح المعروض وضعه في صندوقه الصحيح!</p>
+                        </div>
+                        <div class="bg-amber-50 px-3 py-1.5 rounded-xl border border-amber-200">
+                            <span class="text-[9px] text-amber-800 font-bold block">النقاط</span>
+                            <span id="boxScore" class="text-xl font-black text-amber-950">0</span>
+                        </div>
+                    </div>
+
+                    <div id="boxPlayArea" class="space-y-4">
+                        <div class="bg-gradient-to-br from-amber-50/50 to-orange-50/30 p-5 rounded-2xl border border-amber-200">
+                            <span class="text-xs text-amber-800 font-bold block mb-1">صنّف الفعل التالي:</span>
+                            <h4 id="boxTargetVerb" class="text-3xl font-black text-brand-navy my-1">سَأَلَ</h4>
+                            <p id="boxHint" class="text-xs text-slate-500">«سَأَلَ الطَّالِبُ عَنِ المَسْأَلَةِ»</p>
+                        </div>
+
+                        <div class="grid grid-cols-3 gap-3">
+                            <button onclick="checkCorrectBox('سالم')" class="p-3.5 rounded-xl border-2 border-emerald-400 bg-emerald-50 hover:bg-emerald-100 text-emerald-950 font-black text-xs transition-all active:scale-95">صحيح سالم</button>
+                            <button onclick="checkCorrectBox('مهموز')" class="p-3.5 rounded-xl border-2 border-amber-400 bg-amber-50 hover:bg-amber-100 text-amber-950 font-black text-xs transition-all active:scale-95">صحيح مهموز</button>
+                            <button onclick="checkCorrectBox('مضعف')" class="p-3.5 rounded-xl border-2 border-indigo-400 bg-indigo-50 hover:bg-indigo-100 text-indigo-950 font-black text-xs transition-all active:scale-95">صحيح مضعف</button>
+                        </div>
+
+                        <div id="boxFeedback" class="text-xs font-bold h-5"></div>
+                    </div>
+
+                    <div id="boxWinArea" class="hidden p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-2">
+                        <i class="fa-solid fa-trophy text-emerald-600 text-3xl"></i>
+                        <h4 class="font-black text-emerald-900 text-base">تصنيف احترافي ممتاز!</h4>
+                        <p class="text-xs text-emerald-700">لقد ميزت بين السالم والمهموز والمضعف بنجاح باهر.</p>
+                        <button onclick="resetBoxGame()" class="px-4 py-2 bg-emerald-600 text-white rounded-xl text-xs font-bold">إعادة اللعبة</button>
+                    </div>
+                </div>
+
+                <!-- اللعبة الثانية: صائد الفعل الصحيح (الاستبعاد الذكي) -->
+                <div class="bg-white rounded-3xl p-6 border border-slate-200 shadow-xs max-w-2xl mx-auto text-center space-y-5">
+                    <div class="flex items-center justify-between pb-3 border-b border-slate-100">
+                        <div class="text-right">
+                            <span class="px-3 py-1 bg-teal-100 text-teal-900 rounded-full text-[10px] font-bold">اللعبة الثانية</span>
+                            <h3 class="text-base sm:text-lg font-black text-brand-navy mt-1 font-almarai">صائد الفعل الصحيح من بين المعتلات</h3>
+                            <p class="text-xs text-slate-500">اختر الفعل الصحيح فقط واستبعد الأفعال المعتلة المريضة!</p>
+                        </div>
+                        <div class="bg-teal-50 px-3 py-1.5 rounded-xl border border-teal-200">
+                            <span class="text-[9px] text-teal-800 font-bold block">النقاط</span>
+                            <span id="catcherScore" class="text-xl font-black text-teal-950">0</span>
+                        </div>
+                    </div>
+
+                    <div id="catcherPlayArea" class="space-y-4">
+                        <div class="bg-teal-50/40 p-4 rounded-2xl border border-teal-200">
+                            <span class="text-xs text-teal-800 font-bold block" id="catcherStage">المرحلة 1 من 4:</span>
+                            <h4 class="text-sm font-black text-slate-800 my-1">أين هو الفعل الصحيح المعافى تماماً؟</h4>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-3" id="catcherBtnsBox"></div>
+                        <div id="catcherFeedback" class="text-xs font-bold h-5"></div>
+                    </div>
+
+                    <div id="catcherWinArea" class="hidden p-4 bg-teal-50 rounded-2xl border border-teal-200 space-y-2">
+                        <i class="fa-solid fa-shield-check text-teal-600 text-3xl"></i>
+                        <h4 class="font-black text-teal-900 text-base">صياد القواعد الماهر!</h4>
+                        <p class="text-xs text-teal-700">استطعت كشف جميع الأفعال الصحيحة واستبعاد المعتلة بكل براعة.</p>
+                        <button onclick="resetCatcherGame()" class="px-4 py-2 bg-teal-700 text-white rounded-xl text-xs font-bold">إعادة التحدي</button>
+                    </div>
+                </div>
+
+                <div class="flex justify-end">
+                    <button onclick="switchStation('compete')" class="px-6 py-3 bg-teal-700 hover:bg-teal-800 text-white text-xs font-black rounded-xl shadow-xs flex items-center gap-2 transition-all">
+                        <span>الانتقال إلى المسابقات والتحديات</span>
+                        <i class="fa-solid fa-arrow-left"></i>
+                    </button>
+                </div>
+            </section>
+
+            <!-- 4. المحطة الرابعة: المسابقات والتحديات الصرفية -->
+            <section id="station-compete" class="station-view hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs max-w-2xl mx-auto space-y-6">
+                    <div class="text-center pb-4 border-b border-slate-100">
+                        <span class="px-3 py-1 bg-blue-100 text-blue-900 rounded-full text-xs font-bold">المختبر اللغوي التفاعلي</span>
+                        <h2 class="text-xl font-black text-brand-navy mt-1 font-almarai">مختبر تشخيص الأفعال الصحيحة</h2>
+                        <p class="text-xs text-slate-500">انقر على أي فعل لفحصه في المختبر واستخراج أصوله وبيان سلامته</p>
+                    </div>
+
+                    <div class="flex flex-wrap justify-center gap-2">
+                        <button onclick="inspectCorrectVerb('يَسْتَخْرِجُ')" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">يَسْتَخْرِجُ</button>
+                        <button onclick="inspectCorrectVerb('قَرَأُوا')" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">قَرَأُوا</button>
+                        <button onclick="inspectCorrectVerb('يَمُدُّونَ')" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">يَمُدُّونَ</button>
+                        <button onclick="inspectCorrectVerb('زَلْزَلَ')" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">زَلْزَلَ</button>
+                        <button onclick="inspectCorrectVerb('يَفْهَمْنَ')" class="px-3 py-1.5 bg-slate-100 hover:bg-blue-50 hover:border-blue-300 border border-slate-200 rounded-xl text-xs font-bold text-slate-700">يَفْهَمْنَ</button>
+                    </div>
+
+                    <div class="p-6 bg-gradient-to-br from-blue-50 to-teal-50 border border-blue-200 rounded-2xl space-y-3">
+                        <div class="flex justify-between items-center border-b border-blue-200/70 pb-2">
+                            <span class="text-xs font-bold text-blue-900">الفعل المفحوص:</span>
+                            <span id="labVerbWord" class="text-2xl font-black text-brand-navy">يَسْتَخْرِجُ</span>
+                        </div>
+                        <div class="grid grid-cols-3 gap-3 text-xs pt-1 text-center">
+                            <div class="bg-white p-2.5 rounded-xl border border-blue-100">
+                                <span class="text-slate-400 block mb-0.5">الماضي المجرد:</span>
+                                <span id="labRootWord" class="font-bold text-slate-800 text-sm">خَرَجَ</span>
+                            </div>
+                            <div class="bg-white p-2.5 rounded-xl border border-blue-100">
+                                <span class="text-slate-400 block mb-0.5">الحكم الصرفي:</span>
+                                <span class="font-bold text-emerald-700 text-sm">فعل صحيح</span>
+                            </div>
+                            <div class="bg-white p-2.5 rounded-xl border border-blue-100">
+                                <span class="text-slate-400 block mb-0.5">النوع الدقيق:</span>
+                                <span id="labTypeWord" class="font-bold text-indigo-700 text-sm">صحيح سالم</span>
+                            </div>
+                        </div>
+                        <p id="labExplanation" class="text-xs text-slate-600 bg-white/70 p-2 rounded-xl text-center font-bold">
+                            الماضي المجرد هو (خَرَجَ)، وخلا من أحرف العلة والهمز والتضعيف، فهو صحيح سالم.
+                        </p>
+                    </div>
+
+                    <div class="flex justify-end">
+                        <button onclick="switchStation('exam')" class="px-6 py-3 bg-teal-700 hover:bg-teal-800 text-white text-xs font-black rounded-xl shadow-xs flex items-center gap-2 transition-all">
+                            <span>الانتقال للاختبار المقنن والشهادة</span>
+                            <i class="fa-solid fa-arrow-left"></i>
+                        </button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 5. المحطة الخامسة: الاختبار المقنن والشهادة الرقمية -->
+            <section id="station-exam" class="station-view hidden space-y-6">
+                <div class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-xs max-w-2xl mx-auto">
+                    <div class="text-center pb-6 border-b border-slate-100">
+                        <span class="px-3 py-1 bg-rose-100 text-rose-900 rounded-full text-xs font-black inline-block mb-2">التقويم البعدي للدرس الثاني</span>
+                        <h2 class="text-xl sm:text-2xl font-black text-brand-navy font-almarai">اختبار الكفاءة في الفعل الصحيح</h2>
+                        <p class="text-xs text-slate-500 mt-1">أجب عن الأسئلة بدقة لتتوج بشهادة إتقان الدرس باسمك</p>
+                    </div>
+
+                    <form id="quizFormL2" class="space-y-4 pt-4">
+                        
+                        <!-- إدخال اسم الطالب -->
+                        <div class="p-4 bg-teal-50/70 border border-teal-200 rounded-2xl">
+                            <label class="block text-xs font-bold text-teal-950 mb-1">اكتب اسمك الثلاثي (ليظهر في شهادة التفوق):</label>
+                            <input type="text" id="studentExamNameL2" placeholder="اسمك الثلاثي هنا..." class="w-full py-2 px-3 rounded-xl border border-teal-300 focus:outline-hidden text-sm font-bold text-slate-800 bg-white">
+                        </div>
+
+                        <!-- س 1 -->
+                        <div class="p-4 border border-slate-200 rounded-2xl bg-slate-50/50">
+                            <p class="font-bold text-slate-900 mb-2 text-xs sm:text-sm">١. الفعل (أَكَلَ) نوعه من حيث الصحة والاعتلال:</p>
+                            <div class="space-y-1.5 text-xs">
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q1" value="correct"> صحيح مهموز</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q1" value="w1"> صحيح سالم</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q1" value="w2"> معتل مثال</label>
+                            </div>
+                        </div>
+
+                        <!-- س 2 -->
+                        <div class="p-4 border border-slate-200 rounded-2xl bg-slate-50/50">
+                            <p class="font-bold text-slate-900 mb-2 text-xs sm:text-sm">٢. الفعل (شَدَّ) في جملة «شَدَّ الجُنْدِيُّ العَزْمَ» يُعدُّ فعلاً:</p>
+                            <div class="space-y-1.5 text-xs">
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q2" value="w1"> صحيحاً سالماً</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q2" value="correct"> صحيحاً مضعفاً ثلاثياً</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q2" value="w2"> مضعفاً رباعياً</label>
+                            </div>
+                        </div>
+
+                        <!-- س 3 -->
+                        <div class="p-4 border border-slate-200 rounded-2xl bg-slate-50/50">
+                            <p class="font-bold text-slate-900 mb-2 text-xs sm:text-sm">٣. لمعرفة نوع الفعل (يَكْتُبُونَ) هل هو صحيح أم معتل، نرجعه إلى:</p>
+                            <div class="space-y-1.5 text-xs">
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q3" value="correct"> ماضيه المجرد (كَتَبَ) وهو صحيح سالم</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q3" value="w1"> نعتبره معتلاً لوجود واو الجماعة</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q3" value="w2"> نعتبره مهموزاً لوجود التاء</label>
+                            </div>
+                        </div>
+
+                        <!-- س 4 -->
+                        <div class="p-4 border border-slate-200 rounded-2xl bg-slate-50/50">
+                            <p class="font-bold text-slate-900 mb-2 text-xs sm:text-sm">٤. الفعل (وَسْوَسَ) يُصنّف بأنه فعل:</p>
+                            <div class="space-y-1.5 text-xs">
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q4" value="w1"> معتل مثال لوجود الواو في أوله</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q4" value="correct"> صحيح مضعف رباعي (فأوه ولامه الأولى متماثلان، وعينه ولامه الثانية متماثلان)</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q4" value="w2"> صحيح سالم</label>
+                            </div>
+                        </div>
+
+                        <!-- س 5 -->
+                        <div class="p-4 border border-slate-200 rounded-2xl bg-slate-50/50">
+                            <p class="font-bold text-slate-900 mb-2 text-xs sm:text-sm">٥. أي الأفعال الآتية يُعدُّ «صحيحاً سالماً»؟</p>
+                            <div class="space-y-1.5 text-xs">
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q5" value="correct"> رَسَمَ</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q5" value="w1"> بَدَأَ</label>
+                                <label class="flex items-center gap-2 p-1.5 rounded-lg hover:bg-white cursor-pointer"><input type="radio" name="l2_q5" value="w2"> مَدَّ</label>
+                            </div>
+                        </div>
+
+                        <button type="button" onclick="evaluateQuizL2()" class="w-full py-3.5 bg-teal-700 hover:bg-teal-800 text-white font-black text-sm rounded-xl shadow-xs transition-all active:scale-95 mt-4">
+                            تصحيح الاختبار وعرض شهادة الإنجاز <i class="fa-solid fa-square-check mr-1"></i>
+                        </button>
+                    </form>
+
+                    <!-- كارت الشهادة الرقمية -->
+                    <div id="certBoxL2" class="hidden mt-6 p-6 rounded-3xl border-4 border-teal-400 bg-teal-50/40 text-center space-y-4">
+                        <i class="fa-solid fa-award text-teal-600 text-5xl animate-bounce"></i>
+                        <div>
+                            <span class="text-xs font-bold text-emerald-800 bg-emerald-100 px-3 py-1 rounded-full">شهادة إتقان الدرس الثاني</span>
+                            <h3 class="text-xl font-black text-brand-navy mt-2 font-almarai">شهادة تميز في الفعل الصحيح</h3>
+                            <p class="text-xs text-slate-600 mt-1">تُمنح هذه الشهادة للبطل المتميز:</p>
+                            <h4 id="certNameDisplayL2" class="text-lg font-black text-teal-800 my-1">اسم الطالب</h4>
+                            <p class="text-xs text-slate-700">لإتقانه التام التمييز بين <strong>الفعل الصحيح بأقسامه (السالم والمهموز والمضعف)</strong>.</p>
+                        </div>
+                        <div class="bg-white p-3 rounded-xl border border-teal-200 inline-block px-6">
+                            <span class="text-xs text-slate-500 block font-bold">الدرجة النهائية:</span>
+                            <span id="certGradeDisplayL2" class="text-2xl font-black text-emerald-700">5 / 5</span>
+                        </div>
+                        <div class="text-[10px] text-slate-400 border-t border-teal-200 pt-2">
+                            جامعة الوادي الجديد • كلية التربية • بيئة تعلم مدمج قائمة على الأنشطة اللغوية
+                        </div>
+                        <button onclick="window.print()" class="px-5 py-2 bg-slate-900 text-white rounded-xl text-xs font-bold shadow-xs">
+                            <i class="fa-solid fa-print ml-1"></i> طباعة الشهادة
+                        </button>
+                    </div>
+
+                </div>
+            </section>
+
+        </main>
+    </div>
+
+    <!-- التذييل الأكاديمي -->
+    <footer class="bg-white border-t border-slate-200 mt-auto py-5 text-center text-xs text-slate-500">
+        جامعة الوادي الجديد • كلية التربية • قسم المناهج وطرق التدريس وتكنولوجيا التعليم
+    </footer>
+
+    <!-- سكريبت التشغيل والتفاعل الصوتي -->
+    <script>
+        const playTone = (type) => {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'correct') {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.25);
+                } else if (type === 'wrong') {
+                    osc.frequency.setValueAtTime(220, ctx.currentTime);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.25);
+                } else if (type === 'win') {
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.12);
+                    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.25);
+                    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.45);
+                }
+            } catch (e) {}
+        };
+
+        const stationProgress = {
+            'story': 20,
+            'learn': 40,
+            'games': 60,
+            'compete': 80,
+            'exam': 100
+        };
+
+        function switchStation(stationId) {
+            document.querySelectorAll('.station-view').forEach(view => view.classList.add('hidden'));
+            document.getElementById(`station-${stationId}`).classList.remove('hidden');
+
+            document.querySelectorAll('.station-btn').forEach(btn => {
+                btn.className = 'station-btn w-full flex items-center justify-between p-3 rounded-xl hover:bg-slate-50 border border-transparent text-slate-700 font-bold text-xs transition-all';
+            });
+            const activeBtn = document.getElementById(`btn-${stationId}`);
+            activeBtn.className = 'station-btn w-full flex items-center justify-between p-3 rounded-xl bg-teal-50/90 border border-teal-200 text-teal-950 font-bold text-xs shadow-xs';
+
+            const p = stationProgress[stationId] || 20;
+            document.getElementById('progressBar').style.width = `${p}%`;
+            document.getElementById('progressText').innerText = `${p}%`;
+
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // ================== اللعبة 1: صناديق الفرز ==================
+        const boxData = [
+            { v: "سَأَلَ", hint: "«سَأَلَ الطَّالِبُ عَنِ المَسْأَلَةِ»", type: "مهموز" },
+            { v: "كَتَبَ", hint: "«كَتَبَ التِّلْمِيذُ رِسَالَةً»", type: "سالم" },
+            { v: "مَدَّ", hint: "«مَدَّ الرَّجُلُ يَدَ العَوْنِ»", type: "مضعف" },
+            { v: "قَرَأَ", hint: "«قَرَأَ الطَّالِبُ القِصَّةَ»", type: "مهموز" },
+            { v: "زَلْزَلَ", hint: "«زَلْزَلَ البَطَلُ صُفُوفَ العَدُوِّ»", type: "مضعف" },
+            { v: "فَهِمَ", hint: "«فَهِمَ الوَلَدُ الدَّرْسَ»", type: "سالم" }
+        ];
+
+        let boxIdx = 0, boxScore = 0;
+
+        function checkCorrectBox(type) {
+            const current = boxData[boxIdx];
+            const fb = document.getElementById('boxFeedback');
+
+            if (type === current.type) {
+                playTone('correct');
+                boxScore += 20;
+                document.getElementById('boxScore').innerText = boxScore;
+                fb.className = "text-xs font-bold text-emerald-600";
+                fb.innerText = `صحيح! الفعل (${current.v}) هو صحيح ${current.type}.`;
+            } else {
+                playTone('wrong');
+                fb.className = "text-xs font-bold text-rose-500";
+                fb.innerText = `غير صحيح؛ الفعل (${current.v}) هو (${current.type}).`;
+            }
+
+            setTimeout(() => {
+                fb.innerText = "";
+                boxIdx++;
+                if (boxIdx < boxData.length) {
+                    document.getElementById('boxTargetVerb').innerText = boxData[boxIdx].v;
+                    document.getElementById('boxHint').innerText = boxData[boxIdx].hint;
+                } else {
+                    playTone('win');
+                    document.getElementById('boxPlayArea').classList.add('hidden');
+                    document.getElementById('boxWinArea').classList.remove('hidden');
+                }
+            }, 700);
+        }
+
+        function resetBoxGame() {
+            boxIdx = 0; boxScore = 0;
+            document.getElementById('boxScore').innerText = 0;
+            document.getElementById('boxTargetVerb').innerText = boxData[0].v;
+            document.getElementById('boxHint').innerText = boxData[0].hint;
+            document.getElementById('boxPlayArea').classList.remove('hidden');
+            document.getElementById('boxWinArea').classList.add('hidden');
+        }
+
+        // ================== اللعبة 2: صائد الفعل الصحيح ==================
+        const catcherData = [
+            {
+                options: [
+                    { word: "وَقَفَ", isCorrect: false },
+                    { word: "جَلَسَ", isCorrect: true },
+                    { word: "قَالَ", isCorrect: false }
+                ]
+            },
+            {
+                options: [
+                    { word: "شَدَّ", isCorrect: true },
+                    { word: "سَعَى", isCorrect: false },
+                    { word: "رَمَى", isCorrect: false }
+                ]
+            },
+            {
+                options: [
+                    { word: "وَجَدَ", isCorrect: false },
+                    { word: "صَامَ", isCorrect: false },
+                    { word: "أَخَذَ", isCorrect: true }
+                ]
+            },
+            {
+                options: [
+                    { word: "زَلْزَلَ", isCorrect: true },
+                    { word: "دَعَا", isCorrect: false },
+                    { word: "نَامَ", isCorrect: false }
+                ]
+            }
+        ];
+
+        let catcherIdx = 0, catcherScore = 0;
+
+        function loadCatcherRound() {
+            const current = catcherData[catcherIdx];
+            document.getElementById('catcherStage').innerText = `المرحلة ${catcherIdx + 1} من ${catcherData.length}:`;
+            document.getElementById('catcherFeedback').innerText = "";
+
+            const box = document.getElementById('catcherBtnsBox');
+            box.innerHTML = "";
+
+            current.options.forEach(item => {
+                const btn = document.createElement('button');
+                btn.className = "p-3 rounded-xl border-2 border-slate-200 hover:border-teal-400 bg-white font-black text-slate-800 text-sm shadow-xs transition-all active:scale-95";
+                btn.innerText = item.word;
+                btn.onclick = () => handleCatcherChoice(item, btn);
+                box.appendChild(btn);
+            });
+        }
+
+        function handleCatcherChoice(item, btn) {
+            const fb = document.getElementById('catcherFeedback');
+            if (item.isCorrect) {
+                playTone('correct');
+                catcherScore += 25;
+                document.getElementById('catcherScore').innerText = catcherScore;
+                btn.className = "p-3 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-950 font-black text-sm";
+                fb.className = "text-xs font-bold text-emerald-600";
+                fb.innerText = `صيد صحيح! الفعل (${item.word}) فعل صحيح خالٍ تماماً من حروف العلة.`;
+
+                setTimeout(() => {
+                    catcherIdx++;
+                    if (catcherIdx < catcherData.length) {
+                        loadCatcherRound();
+                    } else {
+                        playTone('win');
+                        document.getElementById('catcherPlayArea').classList.add('hidden');
+                        document.getElementById('catcherWinArea').classList.remove('hidden');
+                    }
+                }, 900);
+            } else {
+                playTone('wrong');
+                btn.className = "p-3 rounded-xl border-2 border-rose-400 bg-rose-50 text-rose-600 font-black text-sm opacity-60";
+                fb.className = "text-xs font-bold text-rose-600";
+                fb.innerText = `انتبه! الفعل (${item.word}) معتل لاحتوائه على حرف علة.`;
+            }
+        }
+
+        function resetCatcherGame() {
+            catcherIdx = 0; catcherScore = 0;
+            document.getElementById('catcherScore').innerText = 0;
+            document.getElementById('catcherPlayArea').classList.remove('hidden');
+            document.getElementById('catcherWinArea').classList.add('hidden');
+            loadCatcherRound();
+        }
+
+        loadCatcherRound();
+
+        // ================== مختبر تشخيص الأفعال الصحيحة ==================
+        const correctDb = {
+            'يَسْتَخْرِجُ': { root: 'خَرَجَ', type: 'صحيح سالم', exp: 'الماضي المجرد (خَرَجَ)، وخلا من أحرف العلة والهمز والتضعيف، فهو صحيح سالم.' },
+            'قَرَأُوا': { root: 'قَرَأَ', type: 'صحيح مهموز', exp: 'الماضي المجرد (قَرَأَ)، لامه همزة أصلية وخلا من أحرف العلة، فهو صحيح مهموز.' },
+            'يَمُدُّونَ': { root: 'مَدَّ', type: 'صحيح مضعف ثلاثي', exp: 'الماضي المجرد (مَدَّ)، عينه ولامه من جنس واحد (دَال مشددة)، فهو مضعف ثلاثي.' },
+            'زَلْزَلَ': { root: 'زَلْزَلَ', type: 'صحيح مضعف رباعي', exp: 'الحرف الأول والثالث متماثلان، والثاني والرابع متماثلان، وخلا من العلة، فهو مضعف رباعي.' },
+            'يَفْهَمْنَ': { root: 'فَهِمَ', type: 'صحيح سالم', exp: 'الماضي المجرد (فَهِمَ)، سَلِمَ من الهمز والتضعيف وحروف العلة، فهو صحيح سالم.' }
+        };
+
+        function inspectCorrectVerb(v) {
+            playTone('correct');
+            const item = correctDb[v];
+            document.getElementById('labVerbWord').innerText = v;
+            document.getElementById('labRootWord').innerText = item.root;
+            document.getElementById('labTypeWord').innerText = item.type;
+            document.getElementById('labExplanation').innerText = item.exp;
+        }
+
+        // ================== تقييم الاختبار المقنن ==================
+        function evaluateQuizL2() {
+            const nameInput = document.getElementById('studentExamNameL2').value.trim();
+            if (!nameInput) {
+                alert("يرجى كتابة اسمك الثلاثي أولاً لتوليد الشهادة!");
+                return;
+            }
+
+            let score = 0;
+            const answers = { l2_q1: 'correct', l2_q2: 'correct', l2_q3: 'correct', l2_q4: 'correct', l2_q5: 'correct' };
+
+            for (let q in answers) {
+                const checked = document.querySelector(`input[name="${q}"]:checked`);
+                if (checked && checked.value === answers[q]) score++;
+            }
+
+            playTone('win');
+            document.getElementById('certNameDisplayL2').innerText = nameInput;
+            document.getElementById('certGradeDisplayL2').innerText = `${score} / 5`;
+            document.getElementById('certBoxL2').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>

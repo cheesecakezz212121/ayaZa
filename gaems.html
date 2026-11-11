@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مغامرات بطل النحو | الفعل اللازم والمتعدي</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800;900&family=Changa:wght@700;800;900&display=swap" rel="stylesheet">
+
+    <style>
+        body {
+            font-family: 'Cairo', sans-serif;
+            user-select: none;
+            overflow: hidden;
+            background: #0f172a;
+        }
+
+        .font-game {
+            font-family: 'Changa', 'Cairo', sans-serif;
+        }
+
+        /* 3D Game Text Effect Like the Image */
+        .game-title-3d {
+            color: #ffcc00;
+            text-shadow: 
+                -2px -2px 0 #0055ff,
+                 2px -2px 0 #0055ff,
+                -2px  2px 0 #0055ff,
+                 2px  2px 0 #0055ff,
+                 0px  4px 0 #002b80,
+                 0px  8px 12px rgba(0,0,0,0.6);
+        }
+
+        .game-subtitle-3d {
+            color: #ffffff;
+            text-shadow: 
+                -2px -2px 0 #d97706,
+                 2px -2px 0 #d97706,
+                -2px  2px 0 #d97706,
+                 2px  2px 0 #d97706,
+                 0px  4px 0 #78350f,
+                 0px  6px 10px rgba(0,0,0,0.4);
+        }
+
+        /* Animations */
+        @keyframes floatHero {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-12px) rotate(2deg); }
+        }
+
+        @keyframes trackMove {
+            0% { background-position-x: 0px; }
+            100% { background-position-x: -1200px; }
+        }
+
+        @keyframes runCycle {
+            0%, 100% { transform: translateY(0px) scaleY(1); }
+            50% { transform: translateY(-16px) scaleY(0.95); }
+        }
+
+        @keyframes spinRing {
+            0% { transform: scaleX(1); }
+            50% { transform: scaleX(0.2); }
+            100% { transform: scaleX(1); }
+        }
+
+        .hero-float {
+            animation: floatHero 2.5s ease-in-out infinite;
+        }
+
+        .track-running {
+            background-image: repeating-linear-gradient(90deg, #10b981 0px, #10b981 60px, #059669 60px, #059669 120px);
+            animation: trackMove 1.8s linear infinite;
+        }
+
+        .track-paused {
+            animation-play-state: paused !important;
+        }
+
+        .runner-anim {
+            animation: runCycle 0.35s ease-in-out infinite;
+        }
+
+        .coin-spin {
+            animation: spinRing 0.8s linear infinite;
+        }
+
+        /* Glass Cards */
+        .glass-box {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(12px);
+            border: 3px solid rgba(255, 255, 255, 0.8);
+        }
+    </style>
+</head>
+<body class="w-screen h-screen flex items-center justify-center relative">
+
+    <!-- حاوية اللعبة بنمط شاشة الهاتف الذكي المماثل للصورة -->
+    <div class="w-full max-w-md h-full sm:h-[94vh] sm:max-h-[850px] bg-gradient-to-b from-sky-400 via-sky-300 to-emerald-200 sm:rounded-[36px] shadow-2xl relative overflow-hidden flex flex-col justify-between border-0 sm:border-8 border-slate-900">
+
+        <!-- سحب وزينة الخلفية -->
+        <div class="absolute inset-0 pointer-events-none z-0">
+            <i class="fa-solid fa-cloud text-white/50 text-6xl absolute top-8 -left-6 animate-pulse"></i>
+            <i class="fa-solid fa-cloud text-white/40 text-8xl absolute top-20 -right-8"></i>
+            <i class="fa-solid fa-cloud text-white/30 text-5xl absolute top-48 left-12"></i>
+            <div class="w-full h-44 bg-gradient-to-t from-emerald-500/30 to-transparent absolute bottom-24"></div>
+        </div>
+
+        <!-- ==================== 1. شاشة البداية الرئيسية ==================== -->
+        <div id="startScreen" class="relative z-10 w-full h-full flex flex-col justify-between p-5 text-center">
+            
+            <!-- زر الصوت العلوي -->
+            <div class="flex justify-start">
+                <button onclick="toggleAudio()" id="audioBtn" class="w-11 h-11 rounded-full bg-blue-600 border-2 border-white text-white shadow-lg flex items-center justify-center text-lg active:scale-90 transition-all">
+                    <i class="fa-solid fa-volume-high"></i>
+                </button>
+            </div>
+
+            <!-- العناوين الثلاثية الأبعاد المماثلة للتصميم -->
+            <div class="space-y-1 mt-2">
+                <h1 class="text-3xl sm:text-4xl font-game font-black game-title-3d tracking-tight">
+                    مغامرات بطل النحو
+                </h1>
+                <h2 class="text-2xl sm:text-3xl font-game font-extrabold game-subtitle-3d">
+                    مع الفعل اللازم والمتعدي
+                </h2>
+                <p class="text-[11px] font-bold text-blue-950 mt-1 bg-white/60 py-0.5 px-3 rounded-full inline-block">
+                    اركض واجمع الحلقات وأجب عن التحديات لتفوز بالشهادة!
+                </p>
+            </div>
+
+            <!-- صورة البطل الكرتوني السريع المماثل للصورة -->
+            <div class="flex-1 flex items-center justify-center py-2 relative">
+                <div class="hero-float relative">
+                    <!-- شخصية البطل السريع -->
+                    <div class="w-36 h-36 rounded-full bg-gradient-to-b from-blue-500 to-indigo-700 border-4 border-white shadow-2xl flex items-center justify-center relative overflow-hidden">
+                        <i class="fa-solid fa-bolt text-amber-300 text-6xl drop-shadow-md"></i>
+                        <span class="absolute bottom-2 text-[11px] font-black text-white bg-blue-900/80 px-2 py-0.5 rounded-full">SONIC GRAMMAR</span>
+                    </div>
+                    <!-- حلقة ذهبية محيطة -->
+                    <div class="w-10 h-10 rounded-full border-4 border-amber-400 bg-amber-200/30 absolute -top-2 -right-2 coin-spin shadow-lg"></div>
+                    <div class="w-8 h-8 rounded-full border-4 border-amber-400 bg-amber-200/30 absolute bottom-1 -left-2 coin-spin shadow-lg"></div>
+                </div>
+            </div>
+
+            <!-- بطاقة إعداد الباحثة ومعلومات الماجستير -->
+            <div class="bg-blue-950/90 border-2 border-amber-400 rounded-2xl py-2 px-3 text-white shadow-lg mx-auto w-full max-w-xs">
+                <span class="text-[11px] text-amber-300 font-bold block">إعداد الباحثة: [ جامعة الوادي الجديد ]</span>
+                <span class="text-xs font-black tracking-wider text-slate-100">كلية التربية • ماجستير تكنولوجيا التعليم</span>
+            </div>
+
+            <!-- حقل كتابة اسم الطالب وأزرار التحكم -->
+            <div class="space-y-3 mt-3 w-full max-w-xs mx-auto">
+                <div>
+                    <label class="block text-xs font-bold text-blue-950 mb-1">اسم البطل المغامر:</label>
+                    <input type="text" id="playerName" placeholder="اكتب اسمك الثلاثي هنا..." class="w-full py-2.5 px-4 rounded-2xl border-2 border-blue-400 focus:border-amber-400 focus:outline-hidden text-center font-bold text-slate-800 text-sm shadow-md bg-white">
+                </div>
+
+                <!-- زر ابدأ المغامرة المماثل للصورة -->
+                <button onclick="startGame()" class="w-full py-3.5 bg-gradient-to-r from-amber-500 via-orange-500 to-amber-500 hover:from-amber-600 hover:to-orange-600 text-white font-game font-black text-xl rounded-2xl shadow-xl border-2 border-amber-200 active:scale-95 transition-all">
+                    ابدأ المغامرة الآن <i class="fa-solid fa-play mr-1"></i>
+                </button>
+
+                <!-- أزرار سفلية (طريقة اللعب / بنك الأسئلة) -->
+                <div class="grid grid-cols-2 gap-2 pt-1">
+                    <button onclick="showModal('howToPlayModal')" class="py-2 px-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow border border-blue-300">
+                        <i class="fa-solid fa-gamepad ml-1"></i> طريقة اللعب
+                    </button>
+                    <button onclick="showModal('questionsBankModal')" class="py-2 px-2 bg-blue-600 hover:bg-blue-700 text-white font-bold text-xs rounded-xl shadow border border-blue-300">
+                        <i class="fa-solid fa-book-open ml-1"></i> أسئلة الدرس
+                    </button>
+                </div>
+
+                <div class="text-[11px] font-bold text-blue-950/80">
+                    <span>عدد التحديات: 12 محطة</span> • <span>المستوى: احترافي</span>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== 2. شاشة اللعب النشطة (Active Gameplay) ==================== -->
+        <div id="gameScreen" class="relative z-10 w-full h-full flex flex-col justify-between hidden">
+            
+            <!-- الشريط العلوي للنتائج والمحاولات -->
+            <div class="p-3 flex justify-between items-center gap-2">
+                <div class="glass-box px-3 py-1.5 rounded-2xl flex items-center gap-2 shadow-md">
+                    <div class="w-7 h-7 rounded-full bg-amber-400 border border-amber-200 flex items-center justify-center text-amber-950 text-xs font-black coin-spin">
+                        <i class="fa-solid fa-ring"></i>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-[9px] text-slate-500 font-bold block">الحلقات</span>
+                        <span id="ringsCount" class="text-base font-black text-slate-900 leading-none">0</span>
+                    </div>
+                </div>
+
+                <div class="glass-box px-3 py-1.5 rounded-2xl text-center shadow-md">
+                    <span class="text-[9px] text-indigo-700 font-bold block">المحطة الحالية</span>
+                    <span id="stationProgress" class="text-xs font-black text-indigo-950 leading-none">1 من 12</span>
+                </div>
+
+                <div class="glass-box px-3 py-1.5 rounded-2xl flex items-center gap-1.5 shadow-md">
+                    <div id="heartsContainer" class="flex gap-1 text-red-500 text-sm">
+                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart"></i>
+                        <i class="fa-solid fa-heart"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- منطقة مضمار الركض والحلقات الذهبية -->
+            <div class="flex-1 relative flex flex-col justify-end items-center overflow-hidden">
+                
+                <!-- الحلقات الذهبية الطائرة على الطريق -->
+                <div id="ringsTrack" class="absolute inset-0 pointer-events-none flex items-center justify-around px-8">
+                    <div class="w-8 h-8 rounded-full border-4 border-amber-400 bg-amber-300/40 coin-spin shadow-lg animate-bounce"></div>
+                    <div class="w-8 h-8 rounded-full border-4 border-amber-400 bg-amber-300/40 coin-spin shadow-lg animate-bounce" style="animation-delay: 0.2s"></div>
+                    <div class="w-8 h-8 rounded-full border-4 border-amber-400 bg-amber-300/40 coin-spin shadow-lg animate-bounce" style="animation-delay: 0.4s"></div>
+                </div>
+
+                <!-- مضمار السباق الأرضي -->
+                <div class="w-full h-36 bg-emerald-600 relative border-t-8 border-emerald-400 shadow-2xl flex items-center justify-center overflow-hidden">
+                    <div id="groundTrack" class="track-running absolute inset-0 opacity-70"></div>
+                    
+                    <!-- شخصية البطل الراكض -->
+                    <div id="runnerHero" class="absolute right-1/4 bottom-6 z-20 flex flex-col items-center">
+                        <div id="runnerSprite" class="runner-anim w-16 h-16 rounded-full bg-blue-600 border-2 border-white shadow-xl flex items-center justify-center text-amber-300 text-3xl">
+                            <i class="fa-solid fa-person-running"></i>
+                        </div>
+                        <div class="w-12 h-3 bg-black/25 rounded-full blur-xs mt-1"></div>
+                    </div>
+
+                    <!-- حاجز السؤال (محطة التحدي) -->
+                    <div id="stationGate" class="absolute -left-28 bottom-6 z-20 flex flex-col items-center transition-all duration-700">
+                        <div class="w-12 h-14 bg-red-600 border-2 border-white rounded-lg flex items-center justify-center text-white text-2xl shadow-xl animate-pulse">
+                            <i class="fa-solid fa-circle-question"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- ==================== 3. نافذة السؤال التفاعلي (Question Modal) ==================== -->
+        <div id="quizModal" class="absolute inset-0 bg-slate-900/75 backdrop-blur-sm z-30 flex items-center justify-center p-4 hidden">
+            <div class="glass-box w-full max-w-sm rounded-3xl p-5 shadow-2xl border-4 border-blue-400 flex flex-col justify-between max-h-[92%] overflow-y-auto">
+                
+                <div>
+                    <div class="flex justify-between items-center mb-3">
+                        <span id="qTypeBadge" class="px-2.5 py-1 bg-amber-100 text-amber-900 rounded-full text-[10px] font-black">اختيار من متعدد</span>
+                        <span class="text-[10px] font-bold text-slate-500" id="modalProgress">المحطة 1 من 12</span>
+                    </div>
+
+                    <!-- نص السؤال -->
+                    <div class="bg-blue-50 border-2 border-blue-200 rounded-2xl p-3 text-center mb-4">
+                        <p class="text-xs font-black text-slate-800 leading-relaxed" id="qTitle">
+                            1. الفعل في جملة «نَصِلُ بالاجتهادِ إلى آمالِنا»:
+                        </p>
+                    </div>
+
+                    <!-- خيارات الإجابة -->
+                    <div id="optionsContainer" class="space-y-2"></div>
+                </div>
+
+                <!-- التغذية الراجعة والتوضيح النحوي -->
+                <div id="qExplanation" class="mt-3 p-2.5 rounded-xl text-xs font-bold leading-relaxed text-center hidden"></div>
+
+                <!-- زر المتابعة بعد الإجابة -->
+                <button id="nextBtn" onclick="nextQuestion()" class="w-full mt-3 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-black text-sm rounded-xl shadow-md hidden active:scale-95 transition-all">
+                    مواصلة الركض <i class="fa-solid fa-arrow-left mr-1"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- ==================== 4. شاشة شهادة التفوق والنهاية ==================== -->
+        <div id="certScreen" class="absolute inset-0 bg-slate-900/90 backdrop-blur-md z-40 flex items-center justify-center p-4 hidden">
+            <div class="bg-white w-full max-w-sm rounded-3xl p-6 shadow-2xl border-4 border-amber-400 text-center space-y-4">
+                
+                <div class="w-20 h-20 bg-amber-400 text-amber-950 rounded-full flex items-center justify-center mx-auto text-4xl shadow-xl animate-bounce">
+                    <i class="fa-solid fa-award"></i>
+                </div>
+
+                <div>
+                    <span class="text-[11px] font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">مبارك إتمام المغامرة كاملة!</span>
+                    <h3 class="text-2xl font-black text-slate-900 font-game mt-2">شهادة تفوق نحوي</h3>
+                    <p class="text-xs text-slate-500 mt-1">تمنح هذه الشهادة للبطل المغامر:</p>
+                    <h4 id="certStudentName" class="text-xl font-black text-blue-900 my-1">اسم الطالب</h4>
+                </div>
+
+                <div class="bg-blue-50 p-3 rounded-2xl border border-blue-100 flex justify-around">
+                    <div>
+                        <span class="text-[10px] text-slate-500 font-bold block">الدرجة النهائية</span>
+                        <span id="finalScoreText" class="text-xl font-black text-blue-900">12 / 12</span>
+                    </div>
+                    <div>
+                        <span class="text-[10px] text-slate-500 font-bold block">الحلقات المجموعة</span>
+                        <span id="finalRingsText" class="text-xl font-black text-amber-600">120</span>
+                    </div>
+                </div>
+
+                <div class="text-[10px] text-slate-400 border-t pt-2">
+                    جامعة الوادي الجديد • كلية التربية • مشروع الماجستير
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 pt-2">
+                    <button onclick="window.print()" class="py-2.5 bg-slate-800 text-white rounded-xl text-xs font-bold shadow active:scale-95">
+                        <i class="fa-solid fa-print ml-1"></i> طباعة الشهادة
+                    </button>
+                    <button onclick="restartGame()" class="py-2.5 bg-amber-500 hover:bg-amber-600 text-white rounded-xl text-xs font-bold shadow active:scale-95">
+                        <i class="fa-solid fa-rotate-right ml-1"></i> لعب مجدداً
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- ==================== 5. نوافذ المساعدة وبنك الأسئلة ==================== -->
+        <!-- نافذة طريقة اللعب -->
+        <div id="howToPlayModal" class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl text-right space-y-4 border-2 border-blue-400">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <h3 class="font-bold text-sm text-blue-950 flex items-center gap-1.5"><i class="fa-solid fa-circle-info text-blue-600"></i> طريقة خوض المغامرة</h3>
+                    <button onclick="hideModal('howToPlayModal')" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="space-y-2 text-xs text-slate-600 leading-relaxed">
+                    <p>1. اكتب اسمك واضغط على <strong>ابدأ المغامرة</strong> لتبدأ الركض مع البطل.</p>
+                    <p>2. أثناء الركض ستصل إلى <strong>12 محطة سؤال</strong> حول الفعل اللازم والمتعدي.</p>
+                    <p>3. كل إجابة صحيحة تمنحك <strong>حلقات ذهبية ونقاطاً</strong> وتفتح لك الطريق لمواصلة الجري.</p>
+                    <p>4. انتبه! لديك <strong>3 قلوب للمحاولات</strong>، وإذا أخطأت ستخسر قلباً، ولكن سيظهر لك توضيح الإجابة الصحيحة للتعلم!</p>
+                </div>
+                <button onclick="hideModal('howToPlayModal')" class="w-full py-2 bg-blue-600 text-white rounded-xl text-xs font-bold">فهمت، جاهز للمغامرة!</button>
+            </div>
+        </div>
+
+        <!-- نافذة بنك أسئلة الدرس -->
+        <div id="questionsBankModal" class="absolute inset-0 bg-slate-900/80 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+            <div class="bg-white w-full max-w-sm rounded-3xl p-5 shadow-2xl text-right space-y-4 border-2 border-blue-400 flex flex-col max-h-[85%]">
+                <div class="flex justify-between items-center border-b pb-2">
+                    <h3 class="font-bold text-sm text-blue-950 flex items-center gap-1.5"><i class="fa-solid fa-book text-amber-500"></i> بنك أسئلة الدرس الأول (12 سؤالاً)</h3>
+                    <button onclick="hideModal('questionsBankModal')" class="text-slate-400 hover:text-slate-700 text-lg"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="overflow-y-auto space-y-2 text-[11px] text-slate-700 flex-1 pr-1">
+                    <div class="p-2 bg-slate-50 rounded-xl border">1. «نَصِلُ بالاجتهادِ إلى آمالِنا» ⬅ فعل لازم (اكتفى بالفاعل المستتر).</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">2. «تُنتِجُ العَزيمةُ ثِمارَ المَعالِي» ⬅ فعل متعدٍّ (نصب المفعول به: ثمار).</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">3. «قَفَزَ اللاعبُ من مسافةٍ بعيدةٍ» ⬅ فعل لازم.</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">4. «يَرْتَقِي الوَطَنُ بالشَّبابِ» ⬅ فعل لازم.</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">5. «نَحْتَرِمُ صَاحِبَ الأَخْلَاقِ» ⬅ فعل متعدٍّ.</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">6. «فَرِحَ اللاعبُ بالفوزِ» ⬅ تعبير عن السعادة بفعل لازم.</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">7. «شَكَرْتُ صَاحِبَ الفَضْلِ» ⬅ تعبير عن الشكر بفعل متعدٍّ.</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">8. «التَقَى الصَّدِيقانِ بعدَ غِيابٍ» ⬅ فعل لازم (اكتفى بفاعله).</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">9. «عَاتِبْ صديقَكَ ولا تَهْجُرْه» ⬅ فعل متعدٍّ (نصب الكاف).</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">10. «يصْدُقُ الشجاعُ مع نفسِهِ» ⬅ فعل لازم.</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">11. «تغَيَّرَ أسلوبي بِسَبَبِ القِراءةِ» ⬅ فعل لازم.</div>
+                    <div class="p-2 bg-slate-50 rounded-xl border">12. «يَتَجنَّبُ العاقِلُ مُصاحَبةَ المُتكبِّرينَ» ⬅ فعل متعدٍّ (نصب مصاحبة).</div>
+                </div>
+                <button onclick="hideModal('questionsBankModal')" class="w-full py-2 bg-blue-600 text-white rounded-xl text-xs font-bold">إغلاق المراجعة</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ==================== المحرك البرمجي الشامل للعبة ==================== -->
+    <script>
+        // بنك الأسئلة الـ 12 المرسل بالكامل
+        const allQuestions = [
+            // أسئلة الاختيار من متعدد (7 أسئلة)
+            {
+                type: "اختيار من متعدد",
+                title: "1. الفعل في جملة «نَصِلُ بالاجتهادِ إلى آمالِنا» هو:",
+                options: [
+                    "أ) فعل متعدٍّ لمفعول به واحد",
+                    "ب) فعل متعدٍّ لمفعولين",
+                    "ج) فعل لازم اكتفى بالفاعل",
+                    "د) فعل مبني للمجهول"
+                ],
+                correctIndex: 2,
+                exp: "توضيح: الفعل (نَصِلُ) جاء بمعنى الوصول، ولم يحتج إلى مفعول به لتتم معناه، بل اكتفى بالفاعل المستتر وجاء بعده جار ومجرور، فهو فعل لازم."
+            },
+            {
+                type: "اختيار من متعدد",
+                title: "2. الفعل في جملة «تُنتِجُ العَزيمةُ ثِمارَ المَعالِي» هو:",
+                options: [
+                    "أ) فعل لازم",
+                    "ب) فعل متعدٍّ نصب مفعولاً به",
+                    "ج) فعل أمر مبني على السكون",
+                    "د) فعل ماضٍ ناقص"
+                ],
+                correctIndex: 1,
+                exp: "توضيح: الفعل (تُنتِجُ) لم يكتفِ بفاعله (العزيمةُ)، بل احتاج إلى مفعول به وهو (ثِمارَ) لتكتمل المعنى، فهو فعل متعدٍّ."
+            },
+            {
+                type: "اختيار من متعدد",
+                title: "3. أي الجمل الآتية تحتوي على «فعل لازم»؟",
+                options: [
+                    "أ) سامِحِ المُخطِئَ.",
+                    "ب) قَفَزَ اللاعبُ من مسافةٍ بعيدةٍ.",
+                    "ج) اغتَنِمْ حياتَكَ قَبْلَ الفواتِ.",
+                    "د) تُؤدِّي الباحِثةُ دَوْرَها المُجتَمعيَّ."
+                ],
+                correctIndex: 1,
+                exp: "توضيح: جملة «قَفَزَ اللاعبُ» تحتوي على الفعل (قَفزَ) وهو فعل لازم اكتفى بفاعله (اللاعبُ)، بينما باقي الجمل تحتوي على أفعال متعدية تنصب مفعولاً به."
+            },
+            {
+                type: "اختيار من متعدد",
+                title: "4. نوع الفعل في جملة «يَرْتَقِي الوَطَنُ بالشَّبابِ» هو:",
+                options: [
+                    "أ) متعدٍّ",
+                    "ب) لازم",
+                    "ج) أمر",
+                    "د) ناسخ"
+                ],
+                correctIndex: 1,
+                exp: "توضيح: الفعل (يرتقي) فعل لازم؛ لأنه اكتفى بفاعله (الوطنُ) ولم يتعدّ إلى مفعول به."
+            },
+            {
+                type: "اختيار من متعدد",
+                title: "5. نوع الفعل في جملة «نَحْتَرِمُ صَاحِبَ الأَخْلَاقِ الحَمِيدَةِ» هو:",
+                options: [
+                    "أ) متعدٍّ",
+                    "ب) لازم",
+                    "ج) مضارع مرفوع بتقدير محذوف",
+                    "د) ماضٍ جامد"
+                ],
+                correctIndex: 0,
+                exp: "توضيح: الفعل (نحترمُ) وقع على مفعول به وهو (صاحبَ)، فهو فعل متعدٍّ."
+            },
+            {
+                type: "اختيار من متعدد",
+                title: "6. التعبير المناسب لموقف «شعور اللاعب بالسعادة بعد الفوز» باستخدام (فعل لازم):",
+                options: [
+                    "أ) حَقَّقَ اللاعبُ الفوزَ.",
+                    "ب) فَرِحَ اللاعبُ بالفوزِ.",
+                    "ج) نَالَ اللاعبُ الكأسَ.",
+                    "د) أحرَصُ على التدريبِ."
+                ],
+                correctIndex: 1,
+                exp: "توضيح: الفعل (فَرِحَ) فعل لازم اكتفى بفاعله (اللاعبُ)، بخلاف الأفعال الأخرى التي تعدت لمفعول به."
+            },
+            {
+                type: "اختيار من متعدد",
+                title: "7. التعبير المناسب لموقف «شكر صاحب الفضل» باستخدام (فعل متعدٍّ):",
+                options: [
+                    "أ) جَلَسَ الصديقُ مع صديقِهِ.",
+                    "ب) نَدِمَ الكسولُ على وقتِهِ.",
+                    "ج) شَكَرْتُ صَاحِبَ الفَضْلِ.",
+                    "د) ذَهَبْتُ إلى المدرسةِ."
+                ],
+                correctIndex: 2,
+                exp: "توضيح: الفعل (شَكَرَ) احتاج إلى مفعول به (صاحبَ) ليتم معناه، وهو الفعل المتعدي المطلوب."
+            },
+            // أسئلة الصواب والخطأ مع التصويب (5 أسئلة)
+            {
+                type: "صواب أو خطأ",
+                title: "8. جملة: «التَقَى الصَّدِيقانِ بعدَ غِيابٍ». الفعل (التَقَى) فِعْلٌ متعدٍّ رَفَعَ فاعِلًا ونَصَبَ مفعولًا بهِ.",
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+                correctIndex: 1, // خطأ
+                exp: "التصويب: خطأ؛ الفعل (التقى) فعل لازم لأنه اكتفى بفاعله (الصديقانِ) ولم يحتج إلى مفعول به."
+            },
+            {
+                type: "صواب أو خطأ",
+                title: "9. جملة: «عَاتِبْ صديقَكَ ولا تَهْجُرْه». الفعل (عَاتِبْ) فِعْلٌ لازِمٌ رَفَعَ فاعِلًا وهو (صديقَك).",
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+                correctIndex: 1, // خطأ
+                exp: "التصويب: خطأ؛ الفعل (عاتبْ) فعل متعدٍّ؛ لأنه نصب مفعولاً به وهو الكاف في (صديقَكَ)، والفاعل مستتر تقديره أنت."
+            },
+            {
+                type: "صواب أو خطأ",
+                title: "10. جملة: «يصْدُقُ الشجاعُ مع نفسِهِ». الفعل (يصْدُقُ) فِعْلٌ لازِمٌ رَفَعَ فاعِلًا فقط وهو (الشجاعُ).",
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+                correctIndex: 0, // صواب
+                exp: "التصويب: صواب؛ العبارة صحيحة تماماً، فاكتفى الفعل بفاعله (الشجاعُ) دون حاجة لمفعول به."
+            },
+            {
+                type: "صواب أو خطأ",
+                title: "11. الفعل (تَغَيَّرَ) في جملة «تغَيَّرَ أسلوبي بِسَبَبِ القِراءةِ» يُعَدُّ فعلاً متعدياً.",
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+                correctIndex: 1, // خطأ
+                exp: "التصويب: خطأ؛ الفعل (تغيّرَ) فعل لازم لأنه اكتفى بفاعله (أسلوبي)."
+            },
+            {
+                type: "صواب أو خطأ",
+                title: "12. الفعل في جملة «يَتَجنَّبُ العاقِلُ مُصاحَبةَ المُتكبِّرينَ» هو فعل متعدٍّ.",
+                options: [
+                    "صواب",
+                    "خطأ"
+                ],
+                correctIndex: 0, // صواب
+                exp: "التصويب: صواب؛ العبارة صحيحة، لأن الفعل (يتجنب) نصب مفعولاً به وهو (مصاحبةَ) ليتم المعنى."
+            }
+        ];
+
+        // حالة اللعبة
+        let currentQ = 0;
+        let score = 0;
+        let rings = 0;
+        let lives = 3;
+        let studentName = "";
+        let isAudioMuted = false;
+
+        // نظام المؤثرات الصوتية الشبيهة بألعاب سونيك (Web Audio API)
+        const playSfx = (type) => {
+            if (isAudioMuted) return;
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+
+                if (type === 'ring') {
+                    // صوت جمع حلقة سونيك
+                    osc.type = 'sine';
+                    osc.frequency.setValueAtTime(987.77, ctx.currentTime);
+                    osc.frequency.setValueAtTime(1318.51, ctx.currentTime + 0.08);
+                    gain.gain.setValueAtTime(0.2, ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.3);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.3);
+                } else if (type === 'correct') {
+                    // صوت إجابة صحيحة
+                    osc.type = 'triangle';
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.1);
+                    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.2);
+                    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.35);
+                } else if (type === 'wrong') {
+                    // صوت خطأ
+                    osc.type = 'sawtooth';
+                    osc.frequency.setValueAtTime(196.00, ctx.currentTime);
+                    osc.frequency.setValueAtTime(146.83, ctx.currentTime + 0.15);
+                    gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.35);
+                } else if (type === 'win') {
+                    // صوت فوز واحتفال
+                    osc.type = 'square';
+                    osc.frequency.setValueAtTime(523.25, ctx.currentTime);
+                    osc.frequency.setValueAtTime(659.25, ctx.currentTime + 0.15);
+                    osc.frequency.setValueAtTime(783.99, ctx.currentTime + 0.3);
+                    osc.frequency.setValueAtTime(1046.50, ctx.currentTime + 0.45);
+                    gain.gain.setValueAtTime(0.25, ctx.currentTime);
+                    gain.gain.linearRampToValueAtTime(0.01, ctx.currentTime + 0.8);
+                    osc.start();
+                    osc.stop(ctx.currentTime + 0.8);
+                }
+            } catch (e) {}
+        };
+
+        function toggleAudio() {
+            isAudioMuted = !isAudioMuted;
+            const btn = document.getElementById('audioBtn');
+            btn.innerHTML = isAudioMuted ? '<i class="fa-solid fa-volume-xmark"></i>' : '<i class="fa-solid fa-volume-high"></i>';
+            btn.className = isAudioMuted 
+                ? "w-11 h-11 rounded-full bg-slate-600 border-2 border-white text-white shadow-lg flex items-center justify-center text-lg active:scale-90 transition-all"
+                : "w-11 h-11 rounded-full bg-blue-600 border-2 border-white text-white shadow-lg flex items-center justify-center text-lg active:scale-90 transition-all";
+        }
+
+        // بدء المغامرة
+        function startGame() {
+            const input = document.getElementById('playerName');
+            studentName = input.value.trim();
+            if (!studentName) {
+                alert("من فضلك اكتب اسمك يا بطل قبل بدء المغامرة!");
+                input.focus();
+                return;
+            }
+
+            currentQ = 0;
+            score = 0;
+            rings = 0;
+            lives = 3;
+            updateHeartsUI();
+
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('certScreen').classList.add('hidden');
+            document.getElementById('gameScreen').classList.remove('hidden');
+
+            playSfx('ring');
+            runToNextStation();
+        }
+
+        function updateHeartsUI() {
+            const c = document.getElementById('heartsContainer');
+            c.innerHTML = '';
+            for (let i = 0; i < 3; i++) {
+                c.innerHTML += (i < lives) 
+                    ? '<i class="fa-solid fa-heart drop-shadow-sm"></i>' 
+                    : '<i class="fa-regular fa-heart opacity-30"></i>';
+            }
+        }
+
+        // حركة الركض نحو المحطة التالية
+        function runToNextStation() {
+            const track = document.getElementById('groundTrack');
+            const heroSprite = document.getElementById('runnerSprite');
+            const gate = document.getElementById('stationGate');
+
+            track.classList.remove('track-paused');
+            heroSprite.classList.add('runner-anim');
+            gate.style.left = "-100px";
+
+            // تحريك البوابة نحو البطل
+            setTimeout(() => { gate.style.left = "65%"; }, 100);
+
+            // صوت جمع الحلقات أثناء الركض
+            setTimeout(() => {
+                rings += 10;
+                document.getElementById('ringsCount').innerText = rings;
+                playSfx('ring');
+            }, 600);
+
+            // الوصول لمحطة السؤال
+            setTimeout(() => {
+                track.classList.add('track-paused');
+                heroSprite.classList.remove('runner-anim');
+                showQuestionModal();
+            }, 1200);
+        }
+
+        // فتح نافذة السؤال
+        function showQuestionModal() {
+            const q = allQuestions[currentQ];
+            document.getElementById('qTypeBadge').innerText = q.type;
+            document.getElementById('modalProgress').innerText = `المحطة ${currentQ + 1} من ${allQuestions.length}`;
+            document.getElementById('stationProgress').innerText = `${currentQ + 1} من ${allQuestions.length}`;
+            document.getElementById('qTitle').innerText = q.title;
+
+            const expBox = document.getElementById('qExplanation');
+            expBox.classList.add('hidden');
+            expBox.innerText = '';
+
+            const nextBtn = document.getElementById('nextBtn');
+            nextBtn.classList.add('hidden');
+
+            const optBox = document.getElementById('optionsContainer');
+            optBox.innerHTML = '';
+
+            q.options.forEach((optText, idx) => {
+                const btn = document.createElement('button');
+                btn.className = "w-full p-2.5 rounded-xl border-2 border-slate-200 hover:border-blue-400 bg-white hover:bg-blue-50 font-bold text-slate-800 text-xs text-right transition-all shadow-xs active:scale-95";
+                btn.innerText = optText;
+                btn.onclick = () => checkAnswer(idx, btn, q);
+                optBox.appendChild(btn);
+            });
+
+            document.getElementById('quizModal').classList.remove('hidden');
+        }
+
+        // التحقق من الإجابة
+        function checkAnswer(selectedIdx, btnElement, q) {
+            // تعطيل جميع الخيارات لمنع تكرار النقر
+            const allBtns = document.getElementById('optionsContainer').querySelectorAll('button');
+            allBtns.forEach(b => b.disabled = true);
+
+            const expBox = document.getElementById('qExplanation');
+            expBox.innerText = q.exp;
+            expBox.classList.remove('hidden');
+
+            if (selectedIdx === q.correctIndex) {
+                playSfx('correct');
+                score++;
+                rings += 20;
+                document.getElementById('ringsCount').innerText = rings;
+                btnElement.className = "w-full p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-100 text-emerald-950 font-bold text-xs text-right shadow-sm";
+                expBox.className = "mt-3 p-2.5 rounded-xl text-xs font-bold leading-relaxed text-right bg-emerald-50 text-emerald-900 border border-emerald-200";
+            } else {
+                playSfx('wrong');
+                lives--;
+                updateHeartsUI();
+                btnElement.className = "w-full p-2.5 rounded-xl border-2 border-rose-500 bg-rose-100 text-rose-950 font-bold text-xs text-right opacity-80";
+                
+                // تلوين الإجابة الصحيحة باللون الأخضر
+                if (allBtns[q.correctIndex]) {
+                    allBtns[q.correctIndex].className = "w-full p-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50 text-emerald-950 font-bold text-xs text-right";
+                }
+                expBox.className = "mt-3 p-2.5 rounded-xl text-xs font-bold leading-relaxed text-right bg-rose-50 text-rose-900 border border-rose-200";
+            }
+
+            document.getElementById('nextBtn').classList.remove('hidden');
+        }
+
+        // الانتقال للخطوة التالية
+        function nextQuestion() {
+            document.getElementById('quizModal').classList.add('hidden');
+            currentQ++;
+
+            // إذا انتهت المحاولات أو انتهت الأسئلة
+            if (lives <= 0 || currentQ >= allQuestions.length) {
+                endGameSession();
+            } else {
+                runToNextStation();
+            }
+        }
+
+        // انتهاء اللعبة وعرض شهادة التفوق
+        function endGameSession() {
+            document.getElementById('gameScreen').classList.add('hidden');
+            document.getElementById('certStudentName').innerText = studentName;
+            document.getElementById('finalScoreText').innerText = `${score} من ${allQuestions.length}`;
+            document.getElementById('finalRingsText').innerText = rings;
+
+            playSfx('win');
+            document.getElementById('certScreen').classList.remove('hidden');
+        }
+
+        function restartGame() {
+            document.getElementById('certScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+        }
+
+        // التحكم في النوافذ المنبثقة
+        function showModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function hideModal(id) { document.getElementById(id).classList.add('hidden'); }
+    </script>
+</body>
+</html>
